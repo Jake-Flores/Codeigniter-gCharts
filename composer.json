@@ -1,0 +1,15 @@
+{
+    "name": "kevinkhill/codeigniter-gcharts",
+    "description": "Google Chart API for Codeigniter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Hill",
+            "email": "kevinkhill@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {
+
+    }
+}
