@@ -275,6 +275,35 @@ class Gchart_examples extends CI_Controller
         $this->load->view('gcharts/pie_chart_basic');
     }
 
+    public function donut_chart_basic()
+    {
+        $this->gcharts->load('PieChart');
+
+        $dataTable = $this->gcharts->DataTable('Foods');
+
+        $dataTable->addColumn('string', 'Foods', 'food');
+        $dataTable->addColumn('string', 'Amount', 'amount');
+
+        $p1 = rand(0,50);
+        $p2 = rand(0,50);
+        $p3 = rand(0,50);
+        $p4 = rand(0,50);
+
+        $dataTable->addRow(array('Pizza', $p1));
+        $dataTable->addRow(array('Beer', $p2));
+        $dataTable->addRow(array('Steak', $p3));
+        $dataTable->addRow(array('Bacon', $p4));
+
+        $config = array(
+            'title' => 'My Foods',
+            'pieHole' => .4
+        );
+
+        $this->gcharts->PieChart('Foods')->setConfig($config);
+
+        $this->load->view('gcharts/donut_chart_basic');
+    }
+
     public function pie_chart_advanced()
     {
         $this->gcharts->load('PieChart');
@@ -319,6 +348,156 @@ class Gchart_examples extends CI_Controller
         $this->gcharts->PieChart('Activities')->setConfig($config);
 
         $this->load->view('gcharts/pie_chart_advanced');
+    }
+
+
+    public function column_chart_basic()
+    {
+        $this->gcharts->load('ColumnChart');
+
+        $dataTable = $this->gcharts->DataTable('Inventory');
+
+        $dataTable->addColumn('string', 'Classroom', 'class');
+        $dataTable->addColumn('number', 'Pencils', 'pencils');
+        $dataTable->addColumn('number', 'Markers', 'markers');
+        $dataTable->addColumn('number', 'Erasers', 'erasers');
+        $dataTable->addColumn('number', 'Binders', 'binders');
+
+        $dataTable->addRow(array(
+            'Science Class',
+            rand(0, 100),
+            rand(0, 100),
+            rand(0, 100),
+            rand(0, 100)
+        ));
+
+        $config = array(
+            'title' => 'Inventory'
+        );
+
+        $this->gcharts->ColumnChart('Inventory')->setConfig($config);
+
+        $this->load->view('gcharts/column_chart_basic');
+    }
+
+    public function column_chart_advanced()
+    {
+        $this->gcharts->load('ColumnChart');
+
+        $dataTable = $this->gcharts->DataTable('Finances');
+
+        $dataTable->addColumn('string', 'Year', 'month');
+        $dataTable->addColumn('number', 'Gross Income', 'gross');
+        $dataTable->addColumn('number', 'Bills Paid', 'bills');
+        $dataTable->addColumn('number', 'Net Income', 'income');
+
+        $gross = rand(80000, 90000); $bills = rand(15000, 25000);
+        $dataTable->addRow(array('2009', $gross, $bills, ($gross - $bills)));
+
+        $gross = rand(80000, 90000); $bills = rand(15000, 25000);
+        $dataTable->addRow(array('2010', $gross, $bills, ($gross - $bills)));
+
+        $gross = rand(80000, 90000); $bills = rand(15000, 25000);
+        $dataTable->addRow(array('2011', $gross, $bills, ($gross - $bills)));
+
+        $gross = rand(80000, 90000); $bills = rand(15000, 25000);
+        $dataTable->addRow(array('2012', $gross, $bills, ($gross - $bills)));
+
+
+        //Either Chain functions together to set configuration
+        $titleStyle = new textStyle();
+        $titleStyle->color('#55BB9A')->fontName('Georgia')->fontSize(22);
+
+        $legendStyle = new textStyle();
+        $legendStyle->color('#F3BB00')->fontName('Arial')->fontSize(16);
+
+        //Or pass and array with configuration options
+        $legend = new legend(array(
+            'position' => 'right',
+            'alignment' => 'start',
+            'textStyle' => $legendStyle
+        ));
+
+        $tooltipStyle = new textStyle(array(
+            'color' => '#000000',
+            'fontName' => 'Courier New',
+            'fontSize' => 10
+        ));
+
+        $tooltip = new tooltip(array(
+            'showColorCode' => TRUE,
+            'textStyle' => $tooltipStyle
+        ));
+
+        $config = array(
+            'axisTitlesPosition' => 'out',
+            'backgroundColor' => new backgroundColor(array(
+                'stroke' => '#CDCDCD',
+                'strokeWidth' => 4,
+                'fill' => '#EEFFCC'
+            )),
+            'barGroupWidth' => '90%',
+            'chartArea' => new chartArea(array(
+                'left' => 80,
+                'top' => 80,
+                'width' => '70%',
+                'height' => '60%'
+            )),
+            'titleTextStyle' => $titleStyle,
+            'legend' => $legend,
+            'tooltip' => $tooltip,
+            'title' => 'My Finances',
+            'titlePosition' => 'out',
+            'width' => 1000,
+            'height' => 450,
+            'colors' => array('#00A100', '#FF0000', '#00FF00'),
+            'hAxis' => new hAxis(array(
+                'baselineColor' => '#BB99BB',
+                'gridlines' => array(
+                    'color' => '#ABCDEF',
+                    'count' => 4
+                ),
+                'minorGridlines' => array(
+                    'color' => '#FEBCDA',
+                    'count' => 2
+                ),
+                'textPosition' => 'out',
+                'textStyle' => new textStyle(array(
+                    'color' => '#C42B5F',
+                    'fontName' => 'Tahoma',
+                    'fontSize' => 14
+                )),
+                'slantedText' => TRUE,
+                'slantedTextAngle' => 45,
+                'title' => 'Years',
+                'titleTextStyle' => new textStyle(array(
+                    'color' => '#BB33CC',
+                    'fontName' => 'Impact',
+                    'fontSize' => 18
+                ))
+            )),
+            'vAxis' => new vAxis(array(
+                'baseline' => 1,
+                'baselineColor' => '#5F0BB1',
+                'format' => '$ ##,###',
+                'textPosition' => 'out',
+                'textStyle' => new textStyle(array(
+                    'color' => '#DDAA88',
+                    'fontName' => 'Verdana',
+                    'fontSize' => 10
+                )),
+                'title' => 'Dollars',
+                'titleTextStyle' => new textStyle(array(
+                    'color' => 'blue',
+                    'fontName' => 'Verdana',
+                    'fontSize' => 14
+                )),
+            ))
+        );
+
+        $this->gcharts->ColumnChart('Finances')->setConfig($config);
+
+        $this->load->view('gcharts/column_chart_advanced');
     }
 
 }

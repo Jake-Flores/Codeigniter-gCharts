@@ -1,4 +1,4 @@
-<h1><?php echo anchor('gchart_examples', 'Codeigniter gChart Examples'); ?> \ Basic Line Chart</h1>
+<h1><?php echo anchor('gchart_examples', 'Codeigniter gChart Examples'); ?> \ Basic Donut Chart</h1>
 <?php
     echo $this->gcharts->PieChart('Foods')->outputInto('food_div');
     echo $this->gcharts->div(500,300);
@@ -32,7 +32,7 @@ $dataTable->addRow(array('Bacon', $p4));
 
 $config = array(
     'title' => 'My Foods',
-    'is3D' => TRUE
+    'pieHole' => .4
 );
 
 $this->gcharts->PieChart('Foods')->setConfig($config);
